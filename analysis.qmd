@@ -13,20 +13,29 @@ suppressPackageStartupMessages(library(tidyverse))
 
 ## Storms Over Time
 
-The following chart displays the number of unique named storms recorded each year in the `storms` dataset.
+The following chart displays the number of unique named storms recorded each year in the `storms` dataset, categorized by their status.
 
 ```{r}
 #| label: named-storms-per-year
 storms %>%
-  group_by(year) %>%
+  filter(status %in% c("tropical depression", "tropical storm", "hurricane")) %>%
+  mutate(status = factor(status, levels = c("tropical depression", "tropical storm", "hurricane"))) %>%
+  group_by(year, status) %>%
   summarise(n_storms = n_distinct(name), .groups = "drop") %>%
-  ggplot(aes(x = year, y = n_storms)) +
-  geom_line(color = "steelblue") +
-  geom_point() +
+  ggplot(aes(x = year, y = n_storms, fill = status)) +
+  geom_area() +
+  scale_fill_manual(
+    values = c(
+      "tropical depression" = "lightblue",
+      "tropical storm" = "orange",
+      "hurricane" = "darkred"
+    )
+  ) +
   labs(
-    title = "Number of Named Storms per Year",
+    title = "Number of Named Storms per Year by Type",
     x = "Year",
-    y = "Number of Unique Named Storms"
+    y = "Number of Unique Named Storms",
+    fill = "Storm Status"
   ) +
   theme_minimal()
 ```
