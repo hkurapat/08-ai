@@ -1,0 +1,30 @@
+# R specific
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+.Rapp.history
+*-Ex.R
+/*.tar.gz
+/*.Rcheck/
+.temp
+.Rproj.user/
+
+# Quarto
+.quarto/
+*_files/
+*_cache/
+# Ignore rendered outputs (common formats)
+*.html
+*.pdf
+*.docx
+*.md
+# But don't ignore the source files
+!README.md
+
+# VS Code
+.vscode/
+
+# OS specific
+.DS_Store
+Thumbs.db
